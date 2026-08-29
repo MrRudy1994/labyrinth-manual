@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Лабиринт — Полевой терминал</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #16140f;
+    --panel: #211d17;
+    --panel-hi: #2b251d;
+    --rust: #a8481c;
+    --rust-bright: #c85a28;
+    --amber: #e8b23d;
+    --toxic: #4f7a6b;
+    --bone: #d8cfc0;
+    --bone-dim: #8f8577;
+    --line: #3a332688;
+    --danger: #b3402c;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--bone);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image: radial-gradient(circle at 20% 10%, #a8481c11 0%, transparent 40%),
+                       radial-gradient(circle at 85% 70%, #4f7a6b0d 0%, transparent 45%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  h1, h2, h3 {
+    font-family: 'Big Shoulders Display', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    color: var(--amber);
+    margin: 0;
+  }
+
+  .mono { font-family: 'IBM Plex Mono', monospace; }
+
+  a { color: var(--rust-bright); }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    position: relative;
+    padding: 56px 20px 40px;
+    overflow: hidden;
+    border-bottom: 3px solid var(--rust);
+  }
+  .hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      to bottom,
+      transparent 0px,
+      transparent 2px,
+      #00000022 3px,
+      transparent 4px
+    );
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    opacity: 0.5;
+  }
+  .hero-eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    color: var(--toxic);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .hero-eyebrow::before { content: "// "; color: var(--rust-bright); }
+  .hero h1 {
+    font-size: clamp(38px, 10vw, 64px);
+    font-weight: 800;
+    line-height: 0.95;
+    margin-bottom: 14px;
+  }
+  .hero h1 span { color: var(--bone); display: block; font-size: 0.42em; font-weight: 600; letter-spacing: 0.08em; margin-top: 6px; }
+  .hero p {
+    max-width: 560px;
+    color: var(--bone-dim);
+    font-size: 15px;
+  }
+  .hero-status {
+    margin-top: 26px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+  }
+  .hero-status span {
+    border: 1px solid var(--line);
+    padding: 5px 10px;
+    color: var(--bone-dim);
+    background: var(--panel);
+  }
+  .hero-status b { color: var(--amber); font-weight: 500; }
+
+  /* ---------- NAV ---------- */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: #16140fee;
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  nav::-webkit-scrollbar { display: none; }
+  nav a {
+    flex: 0 0 auto;
+    padding: 13px 16px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--bone-dim);
+    text-decoration: none;
+    border-right: 1px solid var(--line);
+    white-space: nowrap;
+  }
+  nav a:hover, nav a:active { color: var(--amber); background: var(--panel); }
+
+  /* ---------- HAZARD DIVIDER (signature) ---------- */
+  .hazard {
+    height: 14px;
+    background: repeating-linear-gradient(
+      -45deg,
+      var(--amber) 0px, var(--amber) 16px,
+      #1a1712 16px, #1a1712 32px
+    );
+    opacity: 0.85;
+  }
+
+  /* ---------- SECTIONS ---------- */
+  section {
+    position: relative;
+    z-index: 1;
+    padding: 40px 20px 48px;
+    max-width: 760px;
+    margin: 0 auto;
+  }
+  .sec-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--rust-bright);
+    letter-spacing: 0.12em;
+    margin-bottom: 6px;
+  }
+  section h2 {
+    font-size: clamp(26px, 6vw, 34px);
+    margin-bottom: 20px;
+  }
+  section > p.lead {
+    color: var(--bone-dim);
+    margin-bottom: 26px;
+    max-width: 560px;
+  }
+
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--rust);
+    padding: 18px 20px;
+    margin-bottom: 14px;
+  }
+  .card h3 {
+    font-size: 20px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  .card h3 .tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--toxic);
+    border: 1px solid var(--toxic);
+    padding: 2px 7px;
+  }
+  .card p { margin: 0 0 8px; font-size: 14.5px; color: var(--bone); }
+  .card p:last-child { margin-bottom: 0; }
+  .card .stat-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 18px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--bone-dim);
+    margin-bottom: 10px;
+  }
+  .card .stat-row b { color: var(--amber); font-weight: 500; }
+
+  .spec-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-top: 12px;
+  }
+  @media (min-width: 560px) { .spec-grid { grid-template-columns: 1fr 1fr; } }
+  .spec {
+    background: var(--panel-hi);
+    padding: 12px 14px;
+    border: 1px solid var(--line);
+  }
+  .spec b { color: var(--rust-bright); display: block; font-size: 14px; margin-bottom: 4px; }
+  .spec span { font-size: 13.5px; color: var(--bone-dim); }
+
+  .mod-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  @media (min-width: 640px) { .mod-grid { grid-template-columns: 1fr 1fr; } }
+  .mod {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    padding: 12px 14px;
+    font-size: 13.5px;
+  }
+  .mod .mod-name { color: var(--amber); font-weight: 600; font-size: 15px; margin-bottom: 4px; }
+  .mod .mod-name .icon { margin-right: 6px; }
+  .mod p { margin: 0 0 6px; color: var(--bone); }
+  .mod .hint { color: var(--toxic); font-family: 'IBM Plex Mono', monospace; font-size: 12px; }
+  .mod .hint::before { content: "▸ "; }
+
+  table.data {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+    margin: 10px 0 4px;
+  }
+  table.data th, table.data td {
+    text-align: left;
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--line);
+  }
+  table.data th {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--bone-dim);
+    font-weight: 500;
+  }
+  table.data td.num { font-family: 'IBM Plex Mono', monospace; color: var(--amber); }
+
+  .warn-box {
+    border: 1px solid var(--danger);
+    background: #2a1712;
+    padding: 14px 16px;
+    font-size: 14px;
+    margin: 16px 0;
+    position: relative;
+    padding-left: 44px;
+  }
+  .warn-box::before {
+    content: "⚠";
+    position: absolute;
+    left: 12px;
+    top: 12px;
+    font-size: 18px;
+    color: var(--danger);
+  }
+
+  .room-list { display: flex; flex-direction: column; gap: 8px; }
+  .room {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    padding: 10px 14px;
+    font-size: 14px;
+  }
+  .room .name { color: var(--bone); }
+  .room .badge {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    padding: 3px 8px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .badge.rework { background: #2a3a2e; color: #8fd6a0; border: 1px solid #4f7a6b; }
+  .badge.classic { background: #2b251d; color: var(--bone-dim); border: 1px solid var(--line); }
+
+  footer {
+    padding: 40px 20px 60px;
+    text-align: center;
+    color: var(--bone-dim);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+  }
+
+  ::selection { background: var(--rust); color: #16140f; }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-eyebrow">Терминал доступа — восстановлен из архива объекта</div>
+  <h1>Лабиринт<span>Полевой мануал выжившего</span></h1>
+  <p>Всё, что нужно знать перед спуском: классы, бой, крафт, опасности этажей и то, на что тут вообще можно рассчитывать. Читай внимательно — второй попытки может не быть.</p>
+  <div class="hero-status">
+    <span>КЛАССОВ: <b>3</b></span>
+    <span>СПЕЦИАЛИЗАЦИЙ: <b>6</b></span>
+    <span>ЭТАЖЕЙ: <b>30</b></span>
+    <span>ДОСТИЖЕНИЙ: <b>14</b></span>
+  </div>
+</header>
+
+<nav>
+  <a href="#classes">Классы</a>
+  <a href="#combat">Бой</a>
+  <a href="#modifiers">Модификаторы</a>
+  <a href="#rooms">Комнаты</a>
+  <a href="#craft">Крафт</a>
+  <a href="#economy">Экономика</a>
+  <a href="#achievements">Достижения</a>
+</nav>
+
+<div class="hazard"></div>
+
+<!-- ===================== КЛАССЫ ===================== -->
+<section id="classes">
+  <div class="sec-label">01 — ЛИЧНОЕ ДЕЛО</div>
+  <h2>Классы</h2>
+  <p class="lead">Класс задаёт базовые характеристики, стиль боя в целом и открывает фирменную способность на 3 уровне. Сменить класс можно позже за 3000 кредитов — уровень и опыт при этом сохраняются, характеристики просто пересчитываются заново.</p>
+
+  <div class="card">
+    <h3>Головорез <span class="tag">сила</span></h3>
+    <div class="stat-row"><span>СИЛ <b>7</b></span><span>ЛОВ <b>3</b></span><span>ВЫН <b>7</b></span><span>ХП база <b>20</b></span></div>
+    <p><b style="color:var(--bone)">+20% урона</b> в атаке, но <b style="color:var(--bone)">−10% меткости</b> — бьёт по-настоящему больно, а вот попасть не всегда получается. Усталость копится на 30% быстрее: работает на износ.</p>
+    <p>Способность с 3 уровня — <b>🔥 Берсерк</b>: следующая атака наносит ×2 урона, но враг получает повышенный шанс крита в ответ.</p>
+    <div class="spec-grid">
+      <div class="spec"><b>Несокрушимый</b><span>Снижение входящего урона, шанс не умереть от смертельного удара раз за рейд.</span></div>
+      <div class="spec"><b>Смертник</b><span>Чем меньше своего здоровья, тем больше урон и шанс крита.</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Бродяга <span class="tag">ловкость</span></h3>
+    <div class="stat-row"><span>СИЛ <b>3</b></span><span>ЛОВ <b>7</b></span><span>ВЫН <b>7</b></span><span>ХП база <b>15</b></span></div>
+    <p><b style="color:var(--bone)">−15% урона</b>, но <b style="color:var(--bone)">+15%</b> к защитным приёмам — увёртливый, а не силовой. Продаёт хлам на 20% дороже, покупает на 15% дешевле — прирождённый торговец. Усталость копится на 25% медленнее.</p>
+    <p>Способность с 3 уровня — <b>💨 Дымовая завеса</b>: следующая атака гарантированно попадает и наносит бонусный урон, враг пропускает ход.</p>
+    <div class="spec-grid">
+      <div class="spec"><b>Отравитель</b><span>Атаки заражают врага ядом — тикающий урон и снижение его характеристик. Не действует на роботов и слизней.</span></div>
+      <div class="spec"><b>Кочевник</b><span>Усталость копится ещё медленнее, еда и отдых эффективнее — выносливость на долгие рейды.</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Охотник <span class="tag">точность</span></h3>
+    <div class="stat-row"><span>СИЛ <b>7</b></span><span>ЛОВ <b>7</b></span><span>ВЫН <b>3</b></span><span>ХП база <b>10</b></span></div>
+    <p><b style="color:var(--bone)">+15% к крит-шансу</b>, но <b style="color:var(--bone)">−10%</b> к защитным приёмам — не умеет обороняться. <b style="color:var(--bone)">+50%</b> к шансу редкого/эпического лута с убийств — настоящий следопыт.</p>
+    <p>Способность с 3 уровня — <b>⚡ Смертельный удар</b>: гарантированный крит, игнорирует уклонение противника.</p>
+    <div class="spec-grid">
+      <div class="spec"><b>Загонщик</b><span>Добивает раненых врагов сильнее обычного, критует ощутимо больнее остальных классов.</span></div>
+      <div class="spec"><b>Ищейка</b><span>Больше шанс уклониться от засады целиком, точнее бьёт по полностью здоровым врагам.</span></div>
+    </div>
+  </div>
+
+  <div class="warn-box">Специализация открывается с 5 уровня. Первый выбор бесплатный, смена дальше — 500 кредитов. Перк одной специализации не переносится при смене на другую.</div>
+</section>
+
+<div class="hazard"></div>
+
+<!-- ===================== БОЙ ===================== -->
+<section id="combat">
+  <div class="sec-label">02 — ПРОТОКОЛ СХВАТКИ</div>
+  <h2>Бой</h2>
+  <p class="lead">Каждый ход — выбор одного из трёх приёмов атаки или фирменной способности класса. Защита от ответного удара врага пока рассчитывается автоматически на основе твоих характеристик.</p>
+
+  <table class="data">
+    <tr><th>Приём</th><th>Множитель урона</th><th>База меткости</th><th>Крит-бонус</th></tr>
+    <tr><td>Быстрый</td><td class="num">×1.0</td><td class="num">45</td><td class="num">+0%</td></tr>
+    <tr><td>Мощный</td><td class="num">×1.7</td><td class="num">30</td><td class="num">+5%</td></tr>
+    <tr><td>Точный</td><td class="num">×0.65</td><td class="num">58</td><td class="num">+15%</td></tr>
+  </table>
+  <p style="font-size:13.5px;color:var(--bone-dim);margin-top:-6px">Мощный удар бьёт больнее всего, но реже попадает. Точный — почти всегда попадает и чаще критует, зато сам урон меньше.</p>
+
+  <div class="card">
+    <h3>Крит и защита</h3>
+    <p>Базовый шанс крита — 15%, множитель ×1.5 к урону. Уклонение зависит от ловкости, блок — от суммарной защиты брони. Оба срабатывают автоматически при ответном ударе врага, без затраты хода.</p>
+  </div>
+
+  <div class="card">
+    <h3>Усталость</h3>
+    <p>Растёт с каждым шагом по лабиринту и каждым ходом боя. Высокая усталость снижает меткость и защитные приёмы. Сбрасывается едой, отдыхом в баре или снижается пассивно у некоторых специализаций.</p>
+  </div>
+</section>
+
+<div class="hazard"></div>
+
+<!-- ===================== МОДИФИКАТОРЫ ===================== -->
+<section id="modifiers">
+  <div class="sec-label">03 — АТМОСФЕРНЫЙ ФОН</div>
+  <h2>Модификаторы дня</h2>
+  <p class="lead">Каждые сутки лабиринт получает случайный набор модификаторов — они одинаковы для всех игроков и видны прямо на экране рейда. Уровневые действуют вне боя, боевые — только во время схватки.</p>
+
+  <h3 style="font-size:18px;margin-bottom:10px;color:var(--bone-dim)">Уровневые</h3>
+  <div class="mod-grid">
+    <div class="mod"><div class="mod-name"><span class="icon">☢️</span>Заражение</div><p>Ловушки дополнительно травят ядом.</p><div class="hint">Держи при себе противоядия</div></div>
+    <div class="mod"><div class="mod-name"><span class="icon">🔥</span>Духота</div><p>Усталость копится заметно быстрее.</p><div class="hint">Планируй выход заранее</div></div>
+    <div class="mod"><div class="mod-name"><span class="icon">🕳️</span>Обвалы</div><p>Каждый четвёртый шаг наносит урон.</p><div class="hint">Лишние шаги стоят здоровья</div></div>
+    <div class="mod"><div class="mod-name"><span class="icon">💰</span>Богатая жила</div><p>Больше добычи в тайниках, но и врагов чаще.</p><div class="hint">Больше лута — больше риска</div></div>
+    <div class="mod"><div class="mod-name"><span class="icon">🎭</span>Двуличие</div><p>Мини-игры дают больше, но наказывают сильнее.</p><div class="hint">Каждая мини-игра — ставка</div></div>
+    <div class="mod"><div class="mod-name"><span class="icon">🐜</span>Нашествие</div><p>После ловушки может сразу напасть тварь.</p><div class="hint">Держи здоровье про запас</div></div>
+    <div class="mod"><div class="mod-name"><span class="icon">🔇</span>Тишина</div><p>Обойти засаду не выйдет — только бой.</p><div class="hint">Каждая встреча — драка</div></div>
+    <div class="mod"><div class="mod-name"><span class="icon">👥</span>Двойной натиск</div><p>После победы может сразу напасть второй, ослабленный враг.</p><div class="hint">Не трать все ресурсы на первого</div></div>
+    <div class="mod"><div class="mod-name"><span class="icon">🔄</span>Дежавю</div><p>Комнаты и бои могут повторяться подряд без ограничений.</p><div class="hint">Даже засада за засадой</div></div>
+    <div class="mod"><div class="mod-name"><span class="icon">🩹</span>Угроза здоровью</div><p>Лечение слабее на четверть, лекарь не встречается вовсе.</p><div class="hint">Экономь здоровье заранее</div></div>
+  </div>
+
+  <h3 style="font-size:18px;margin:26px 0 10px;color:var(--bone-dim)">Боевые</h3>
+  <div class="mod-grid">
+    <div class="mod"><div class="mod-name"><span class="icon">💀</span>Живучие твари</div><p>Больше здоровья у врагов, но и опыта больше.</p><div class="hint">Следи за кулдаунами</div></div>
+    <div class="mod"><div class="mod-name"><span class="icon">🛡️</span>Бронированные</div><p>Враги защищены крепче, бьют менее метко.</p><div class="hint">Точный удар полезнее сильного</div></div>
+    <div class="mod"><div class="mod-name"><span class="icon">🩸</span>Кровопускание</div><p>Криты врагов открывают кровотечение.</p><div class="hint">Не затягивай бой на низком ХП</div></div>
+    <div class="mod"><div class="mod-name"><span class="icon">⚡</span>Ярость</div><p>Враги бьют больнее, но хуже держат удар.</p><div class="hint">Убивай быстро</div></div>
+    <div class="mod"><div class="mod-name"><span class="icon">🌀</span>Скользкие</div><p>Враги уворачиваются заметно чаще.</p><div class="hint">Меткость важнее урона</div></div>
+    <div class="mod"><div class="mod-name"><span class="icon">🔒</span>Заедание</div><p>Приёмы перезаряжаются на ход дольше.</p><div class="hint">Экономь сильные удары</div></div>
+    <div class="mod"><div class="mod-name"><span class="icon">🧿</span>Стойкость</div><p>По врагам труднее критовать, зато твои удары тяжелее.</p><div class="hint">Ставка на стабильный размен</div></div>
+    <div class="mod"><div class="mod-name"><span class="icon">🎯</span>Увечья</div><p>Промах даёт врагу мгновенную вторую атаку.</p><div class="hint">Промах теперь дороже</div></div>
+  </div>
+</section>
+
+<div class="hazard"></div>
+
+<!-- ===================== КОМНАТЫ ===================== -->
+<section id="rooms">
+  <div class="sec-label">04 — ЧТО ЗА ПОВОРОТОМ</div>
+  <h2>Комнаты и мини-игры</h2>
+  <p class="lead">Часть комнат — просто короткие эпизоды с одним решением. Часть переработана в полноценные мини-квесты с несколькими шагами и разными исходами.</p>
+  <div class="room-list">
+    <div class="room"><span class="name">Старое хранилище</span><span class="badge rework">5 шагов подряд</span></div>
+    <div class="room"><span class="name">Сапёр с проводами</span><span class="badge rework">риск разных исходов</span></div>
+    <div class="room"><span class="name">Напёрстки</span><span class="badge rework">3 раунда, ставка</span></div>
+    <div class="room"><span class="name">Радиопомехи</span><span class="badge rework">настройка на слух</span></div>
+    <div class="room"><span class="name">Игровой автомат</span><span class="badge rework">забрать или рискнуть</span></div>
+    <div class="room"><span class="name">Странствующий мутант</span><span class="badge classic">диалог</span></div>
+    <div class="room"><span class="name">Крысиная нора</span><span class="badge classic">один клик</span></div>
+    <div class="room"><span class="name">Заклинивший вентиль</span><span class="badge classic">один клик</span></div>
+  </div>
+</section>
+
+<div class="hazard"></div>
+
+<!-- ===================== КРАФТ ===================== -->
+<section id="craft">
+  <div class="sec-label">05 — МАСТЕРСКАЯ</div>
+  <h2>Крафт</h2>
+  <p class="lead">Мастерская открывается с 3 уровня. Материалы фармятся с гуманоидных и технологичных врагов, а также из тайников со снаряжением.</p>
+  <div class="card">
+    <div class="stat-row">
+      <span>⚙️ Утиль <b>обычный</b></span>
+      <span>🔧 Деталь <b>редкий</b></span>
+      <span>⭐ Компонент <b>эпический</b></span>
+    </div>
+    <p>Обычный враг даёт Утиль с шансом 25%. Редкий враг — гарантированный Утиль плюс 20% на Деталь. Эпический — гарантированная Деталь плюс 15% на Компонент.</p>
+  </div>
+</section>
+
+<div class="hazard"></div>
+
+<!-- ===================== ЭКОНОМИКА ===================== -->
+<section id="economy">
+  <div class="sec-label">06 — БАЛАНС РЕСУРСОВ</div>
+  <h2>Экономика</h2>
+  <p class="lead">Кредиты из рейда попадают на счёт только после успешной эвакуации — при смерти всё, что нёс с собой, теряется.</p>
+
+  <h3 style="font-size:18px;margin-bottom:10px;color:var(--bone-dim)">Лечение</h3>
+  <table class="data">
+    <tr><th>Предмет</th><th>Цена</th><th>Лечит</th></tr>
+    <tr><td>Бинт</td><td class="num">20</td><td class="num">10%</td></tr>
+    <tr><td>Аптечка первой помощи</td><td class="num">40</td><td class="num">20%</td></tr>
+    <tr><td>Медицинский набор</td><td class="num">60</td><td class="num">30%</td></tr>
+    <tr><td>Полевая инъекция</td><td class="num">80</td><td class="num">40%</td></tr>
+    <tr><td>Армейский стимулятор</td><td class="num">100</td><td class="num">50%</td></tr>
+  </table>
+
+  <h3 style="font-size:18px;margin:22px 0 10px;color:var(--bone-dim)">Антидоты</h3>
+  <p style="font-size:14px">Противоядие (яд), Ожоговая мазь (ожог), Жгут (кровотечение) — по 50 кредитов каждый, снимают соответствующий дебаф немедленно.</p>
+</section>
+
+<div class="hazard"></div>
+
+<!-- ===================== ДОСТИЖЕНИЯ ===================== -->
+<section id="achievements">
+  <div class="sec-label">07 — ЛИЧНЫЙ ЗАЧЁТ</div>
+  <h2>Достижения и доска почёта</h2>
+  <p class="lead">14 достижений в четырёх категориях — боевые, исследование, экономика, разное. Доска почёта показывает топ-10 по пяти направлениям: уровень, глубина, арена, богатство, монстры.</p>
+  <div class="card">
+    <p>Достижения проверяются автоматически после боя, победы на арене, сдачи квеста и продажи предметов — следить за прогрессом можно в разделе профиля.</p>
+  </div>
+</section>
+
+<footer>
+  ЛАБИРИНТ // ПОЛЕВОЙ ТЕРМИНАЛ ВЫЖИВШЕГО<br>
+  Данные актуальны на момент последнего обновления протокола.
+</footer>
+
+</body>
+</html>
