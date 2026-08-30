@@ -332,6 +332,7 @@
     <span>СПЕЦИАЛИЗАЦИЙ: <b>6</b></span>
     <span>ЭТАЖЕЙ: <b>30</b></span>
     <span>ДОСТИЖЕНИЙ: <b>14</b></span>
+    <span>ПРОТИВНИКОВ: <b>26</b></span>
   </div>
 </header>
 
@@ -339,10 +340,12 @@
   <a href="#classes">Классы</a>
   <a href="#combat">Бой</a>
   <a href="#modifiers">Модификаторы</a>
-  <a href="#rooms">Комнаты</a>
   <a href="#craft">Крафт</a>
   <a href="#economy">Экономика</a>
+  <a href="#city">Город</a>
   <a href="#achievements">Достижения</a>
+  <a href="#leaderboard">Доска почёта</a>
+  <a href="#bestiary">Бестиарий</a>
 </nav>
 
 <div class="hazard"></div>
@@ -414,6 +417,16 @@
     <h3>Усталость</h3>
     <p>Растёт с каждым шагом по лабиринту и каждым ходом боя. Высокая усталость снижает меткость и защитные приёмы. Сбрасывается едой, отдыхом в баре или снижается пассивно у некоторых специализаций.</p>
   </div>
+
+  <h3 style="font-size:18px;margin:26px 0 10px;color:var(--bone-dim)">Дебафы</h3>
+  <p style="font-size:14px;color:var(--bone-dim);margin-top:-4px">Статус-эффекты тикают каждый ход, пока активны. Снимаются соответствующим антидотом немедленно или проходят сами по истечении срока.</p>
+  <table class="data">
+    <tr><th>Эффект</th><th>Длительность</th><th>Урон за ход</th><th>Дополнительно</th></tr>
+    <tr><td>🧪 Яд</td><td class="num">4 хода</td><td class="num">2% от макс. ХП</td><td>−10% меткости, −10% к блоку/увороту</td></tr>
+    <tr><td>🔥 Ожог</td><td class="num">3 хода</td><td class="num">3% от макс. ХП</td><td>−10% урона от своих атак</td></tr>
+    <tr><td>🩸 Кровотечение</td><td class="num">5 ходов</td><td class="num">1.5% от макс. ХП</td><td>дольше всех, но слабее за тик</td></tr>
+  </table>
+  <p style="font-size:13.5px;color:var(--bone-dim)">Снимаются Противоядием, Ожоговой мазью и Жгутом соответственно — по 50 кредитов каждый.</p>
 </section>
 
 <div class="hazard"></div>
@@ -448,25 +461,6 @@
     <div class="mod"><div class="mod-name"><span class="icon">🔒</span>Заедание</div><p>Приёмы перезаряжаются на ход дольше.</p><div class="hint">Экономь сильные удары</div></div>
     <div class="mod"><div class="mod-name"><span class="icon">🧿</span>Стойкость</div><p>По врагам труднее критовать, зато твои удары тяжелее.</p><div class="hint">Ставка на стабильный размен</div></div>
     <div class="mod"><div class="mod-name"><span class="icon">🎯</span>Увечья</div><p>Промах даёт врагу мгновенную вторую атаку.</p><div class="hint">Промах теперь дороже</div></div>
-  </div>
-</section>
-
-<div class="hazard"></div>
-
-<!-- ===================== КОМНАТЫ ===================== -->
-<section id="rooms">
-  <div class="sec-label">04 — ЧТО ЗА ПОВОРОТОМ</div>
-  <h2>Комнаты и мини-игры</h2>
-  <p class="lead">Часть комнат — просто короткие эпизоды с одним решением. Часть переработана в полноценные мини-квесты с несколькими шагами и разными исходами.</p>
-  <div class="room-list">
-    <div class="room"><span class="name">Старое хранилище</span><span class="badge rework">5 шагов подряд</span></div>
-    <div class="room"><span class="name">Сапёр с проводами</span><span class="badge rework">риск разных исходов</span></div>
-    <div class="room"><span class="name">Напёрстки</span><span class="badge rework">3 раунда, ставка</span></div>
-    <div class="room"><span class="name">Радиопомехи</span><span class="badge rework">настройка на слух</span></div>
-    <div class="room"><span class="name">Игровой автомат</span><span class="badge rework">забрать или рискнуть</span></div>
-    <div class="room"><span class="name">Странствующий мутант</span><span class="badge classic">диалог</span></div>
-    <div class="room"><span class="name">Крысиная нора</span><span class="badge classic">один клик</span></div>
-    <div class="room"><span class="name">Заклинивший вентиль</span><span class="badge classic">один клик</span></div>
   </div>
 </section>
 
@@ -511,22 +505,162 @@
 
 <div class="hazard"></div>
 
+<!-- ===================== ГОРОД ===================== -->
+<section id="city">
+  <div class="sec-label">07 — ПОСЕЛЕНИЕ</div>
+  <h2>Город</h2>
+  <p class="lead">Между вылазками — семь мест, где можно подготовиться, подлечиться или потратить добытое.</p>
+
+  <div class="card">
+    <h3>👤 Персонаж</h3>
+    <p>Характеристики, снаряжение, специализация, смена класса.</p>
+  </div>
+  <div class="card">
+    <h3>🍺 Бар «Ржавый кастет»</h3>
+    <p>Общий хаб с несколькими активностями сразу: <b style="color:var(--bone)">🍳 Кухня</b> (еда снижает усталость), <b style="color:var(--bone)">🎲 Кости</b> (мини-игра на ставку), <b style="color:var(--bone)">🛌 Отдых</b> (тоже снижает усталость), <b style="color:var(--bone)">🏟️ Арена</b> (PvP-бои против других игроков) и <b style="color:var(--bone)">🔨 Мастерская</b> (крафт снаряжения из материалов).</p>
+  </div>
+  <div class="card">
+    <h3>🏥 Медпункт</h3>
+    <p>Покупка лечебных предметов и антидотов впрок.</p>
+  </div>
+  <div class="card">
+    <h3>🛒 Торговый квартал</h3>
+    <p>Три раздела: <b style="color:var(--bone)">📦 Скупщик</b> (продажа хлама и лишнего снаряжения), <b style="color:var(--bone)">🛠️ Торговец для новичков</b> (базовая экипировка), <b style="color:var(--bone)">⚖️ Аукцион</b> (торговля снаряжением между игроками).</p>
+  </div>
+  <div class="card">
+    <h3>🎓 Тренировочный лагерь</h3>
+    <p>Смена специализации, просмотр активных и пассивных способностей.</p>
+  </div>
+  <div class="card">
+    <h3>📋 Доска объявлений</h3>
+    <p>Побочные задания за кредиты и опыт — обновляются ежедневно.</p>
+  </div>
+  <div class="card">
+    <h3>☠️ Вылазка в лабиринт</h3>
+    <p>Вход в рейд — выбор этажа и спуск.</p>
+  </div>
+</section>
+
+<div class="hazard"></div>
+
 <!-- ===================== ДОСТИЖЕНИЯ ===================== -->
 <section id="achievements">
-  <div class="sec-label">07 — ЛИЧНЫЙ ЗАЧЁТ</div>
-  <h2>Достижения и доска почёта</h2>
-  <p class="lead">14 достижений в четырёх категориях — боевые, исследование, экономика, разное. Доска почёта показывает топ-10 по пяти направлениям: уровень, глубина, арена, богатство, монстры.</p>
+  <div class="sec-label">08 — ЛИЧНЫЙ ЗАЧЁТ</div>
+  <h2>Достижения</h2>
+  <p class="lead">14 достижений в пяти категориях. Проверяются автоматически, награда начисляется сразу при выполнении условия.</p>
+
+  <h3 style="font-size:18px;margin-bottom:10px;color:var(--bone-dim)">⚔️ Боевые</h3>
+  <table class="data">
+    <tr><th>Достижение</th><th>Условие</th></tr>
+    <tr><td>🩸 Первая кровь</td><td>Победить первого врага</td></tr>
+    <tr><td>💯 Ветеран</td><td>Победить 100 врагов</td></tr>
+    <tr><td>🗡️ Мясник</td><td>Победить 500 врагов</td></tr>
+    <tr><td>👑 Убийца стражей</td><td>Победить 5 боссов этажей</td></tr>
+    <tr><td>🏔️ Покоритель бездны</td><td>Победить босса-стража 30 этажа</td></tr>
+  </table>
+
+  <h3 style="font-size:18px;margin:22px 0 10px;color:var(--bone-dim)">🧭 Исследование</h3>
+  <table class="data">
+    <tr><th>Достижение</th><th>Условие</th></tr>
+    <tr><td>🚪 Первый шаг</td><td>Спуститься на 5 этаж</td></tr>
+    <tr><td>🌀 Глубинник</td><td>Спуститься на 15 этаж</td></tr>
+    <tr><td>🏆 Покоритель лабиринта</td><td>Спуститься на 30 этаж</td></tr>
+  </table>
+
+  <h3 style="font-size:18px;margin:22px 0 10px;color:var(--bone-dim)">💰 Экономика</h3>
+  <table class="data">
+    <tr><th>Достижение</th><th>Условие</th></tr>
+    <tr><td>🪙 Первая тысяча</td><td>Накопить 1000 кредитов на счету</td></tr>
+    <tr><td>💎 Богач</td><td>Накопить 10 000 кредитов на счету</td></tr>
+  </table>
+
+  <h3 style="font-size:18px;margin:22px 0 10px;color:var(--bone-dim)">🏟️ Арена</h3>
+  <table class="data">
+    <tr><th>Достижение</th><th>Условие</th></tr>
+    <tr><td>🥊 Первая победа</td><td>Выиграть первый бой на арене</td></tr>
+    <tr><td>🏅 Чемпион арены</td><td>Выиграть 25 боёв на арене</td></tr>
+  </table>
+
+  <h3 style="font-size:18px;margin:22px 0 10px;color:var(--bone-dim)">📜 Разное</h3>
+  <table class="data">
+    <tr><th>Достижение</th><th>Условие</th></tr>
+    <tr><td>📜 Первый заказ</td><td>Выполнить первое задание с доски объявлений</td></tr>
+    <tr><td>🛠️ Многостаночник</td><td>Выполнить 50 заданий с доски объявлений</td></tr>
+  </table>
+</section>
+
+<div class="hazard"></div>
+
+<!-- ===================== ДОСКА ПОЧЁТА ===================== -->
+<section id="leaderboard">
+  <div class="sec-label">09 — ОБЩИЙ РЕЙТИНГ</div>
+  <h2>Доска почёта</h2>
+  <p class="lead">Топ-10 игроков по пяти направлениям — обновляется в реальном времени.</p>
   <div class="card">
-    <p>Достижения проверяются автоматически после боя, победы на арене, сдачи квеста и продажи предметов — следить за прогрессом можно в разделе профиля.</p>
+    <div class="stat-row">
+      <span>🎖 Уровень</span>
+      <span>🕳️ Глубина</span>
+      <span>⚔️ Арена</span>
+      <span>💰 Богатство</span>
+      <span>☠️ Монстры</span>
+    </div>
+    <p>Найти доску можно прямо в городе — она показывает никнейм, класс и текущий результат каждого игрока в топе.</p>
   </div>
+</section>
+
+<div class="hazard"></div>
+
+<!-- ===================== БЕСТИАРИЙ ===================== -->
+<section id="bestiary">
+  <div class="sec-label">10 — ПОЛЕВОЙ ЖУРНАЛ НАБЛЮДЕНИЙ</div>
+  <h2>Бестиарий</h2>
+  <p class="lead">26 противников, встречающихся в лабиринте, по нарастанию опасности. Точные цифры урона и здоровья не разглашаются — узнаешь на собственной шкуре.</p>
+
+  <h3 style="font-size:18px;margin-bottom:10px;color:var(--bone-dim)">⚪ Обычные</h3>
+  <div class="room-list">
+    <div class="room"><span class="name">🧟 Больной ходок</span></div>
+    <div class="room"><span class="name">🤒 Кашляющий заражённый</span></div>
+    <div class="room"><span class="name">🧪 Кислотный слизень</span></div>
+    <div class="room"><span class="name">🐀 Мутировавшая крыса</span></div>
+    <div class="room"><span class="name">🔪 Одичавший мародёр</span></div>
+    <div class="room"><span class="name">🦂 Панцирный жалохвост</span></div>
+  </div>
+
+  <h3 style="font-size:18px;margin:22px 0 10px;color:var(--bone-dim)">🔵 Редкие</h3>
+  <div class="room-list">
+    <div class="room"><span class="name">🧊 Крио-тварь</span></div>
+    <div class="room"><span class="name">🕷️ Паук-трупоед</span></div>
+    <div class="room"><span class="name">🦎 Ползун</span></div>
+    <div class="room"><span class="name">🐺 Радиационный волк</span></div>
+    <div class="room"><span class="name">🤖 Ржавый страж</span></div>
+    <div class="room"><span class="name">🐗 Секач-мутант</span></div>
+    <div class="room"><span class="name">🦴 Собиратель костей</span></div>
+    <div class="room"><span class="name">🦍 Техно-горилла</span></div>
+    <div class="room"><span class="name">🧠 Тронутый скиталец</span></div>
+    <div class="room"><span class="name">👹 Химера пустошей</span></div>
+    <div class="room"><span class="name">🔥 Чокнутый факир</span></div>
+  </div>
+
+  <h3 style="font-size:18px;margin:22px 0 10px;color:var(--bone-dim)">🟣 Эпические</h3>
+  <div class="room-list">
+    <div class="room"><span class="name">🐕‍🦺 Вожак стаи мутантов</span></div>
+    <div class="room"><span class="name">🪓 Каратель-палач</span></div>
+    <div class="room"><span class="name">🩸 Кровавый жнец</span></div>
+    <div class="room"><span class="name">💀 Опустошитель Бездны</span></div>
+    <div class="room"><span class="name">🍄 Поражённый плесенью</span></div>
+    <div class="room"><span class="name">🌊 Тварь из коллектора</span></div>
+    <div class="room"><span class="name">🦾 Экзоскелет-палач</span></div>
+    <div class="room"><span class="name">⚡ Электрочервь</span></div>
+    <div class="room"><span class="name">☣️ Ядовитый кот</span></div>
+  </div>
+
+  <div class="warn-box">Боссы этажей — не отдельные существа, а усиленные версии обычных обитателей лабиринта. Странствующий мутант при агрессивных переговорах превращается в отдельного противника — 🧟 Разъярённого мутанта.</div>
 </section>
 
 <footer>
   ЛАБИРИНТ // ПОЛЕВОЙ ТЕРМИНАЛ ВЫЖИВШЕГО<br>
   Данные актуальны на момент последнего обновления протокола.
 </footer>
-
-  
 
 </body>
 </html>
