@@ -332,7 +332,7 @@
     <span>СПЕЦИАЛИЗАЦИЙ: <b>6</b></span>
     <span>ЭТАЖЕЙ: <b>30</b></span>
     <span>ДОСТИЖЕНИЙ: <b>14</b></span>
-    <span>ПРОТИВНИКОВ: <b>26</b></span>
+    <span>ПРОТИВНИКОВ: <b>34</b></span>
   </div>
 </header>
 
@@ -346,6 +346,7 @@
   <a href="#achievements">Достижения</a>
   <a href="#leaderboard">Доска почёта</a>
   <a href="#bestiary">Бестиарий</a>
+  <a href="#gear-sets">Сеты</a>
 </nav>
 
 <div class="hazard"></div>
@@ -362,15 +363,15 @@
     <p><b style="color:var(--bone)">+20% урона</b> в атаке, но <b style="color:var(--bone)">−10% меткости</b> — бьёт по-настоящему больно, а вот попасть не всегда получается. Усталость копится на 30% быстрее: работает на износ.</p>
     <p>Способность с 3 уровня — <b>🔥 Берсерк</b>: следующая атака наносит ×2 урона, но враг получает повышенный шанс крита в ответ.</p>
     <div class="spec-grid">
-      <div class="spec"><b>Несокрушимый</b><span>Снижение входящего урона, шанс не умереть от смертельного удара один раз за рейд.</span></div>
-      <div class="spec"><b>Смертник</b><span>Чем меньше здоровья, тем больше урон и выше шанс критического урона.</span></div>
+      <div class="spec"><b>Несокрушимый</b><span>Снижение входящего урона, шанс не умереть от смертельного удара раз за рейд.</span></div>
+      <div class="spec"><b>Смертник</b><span>Чем меньше своего здоровья, тем больше урон и шанс крита.</span></div>
     </div>
   </div>
 
   <div class="card">
     <h3>Бродяга <span class="tag">ловкость</span></h3>
     <div class="stat-row"><span>СИЛ <b>3</b></span><span>ЛОВ <b>7</b></span><span>ВЫН <b>7</b></span><span>ХП база <b>15</b></span></div>
-    <p><b style="color:var(--bone)">−15% урона</b>, но <b style="color:var(--bone)">+15%</b> к защитным приёмам — увёртливый, а не силовой. Продаёт хлам на 20% дороже. Усталость копится на 25% медленнее.</p>
+    <p><b style="color:var(--bone)">−15% урона</b>, но <b style="color:var(--bone)">+15%</b> к защитным приёмам — увёртливый, а не силовой. Продаёт хлам на 20% дороже, покупает на 15% дешевле — прирождённый торговец. Усталость копится на 25% медленнее.</p>
     <p>Способность с 3 уровня — <b>💨 Дымовая завеса</b>: следующая атака гарантированно попадает и наносит бонусный урон, враг пропускает ход.</p>
     <div class="spec-grid">
       <div class="spec"><b>Отравитель</b><span>Атаки заражают врага ядом — тикающий урон и снижение его характеристик. Не действует на роботов и слизней.</span></div>
@@ -614,47 +615,177 @@
 <section id="bestiary">
   <div class="sec-label">10 — ПОЛЕВОЙ ЖУРНАЛ НАБЛЮДЕНИЙ</div>
   <h2>Бестиарий</h2>
-  <p class="lead">26 противников, встречающихся в лабиринте, по нарастанию опасности. Точные цифры урона и здоровья не разглашаются — узнаешь на собственной шкуре.</p>
+  <p class="lead">34 противника, встречающихся в лабиринте — растянуты по всей глубине лабиринта (вплоть до 28 этажа), новые лица продолжают появляться почти всю игру. Три из них — организованные военизированные фракции с собственной иерархией (обычный → редкий → эпический → отдельный босс). Точные цифры урона и здоровья не разглашаются — узнаешь на собственной шкуре.</p>
 
-  <h3 style="font-size:18px;margin-bottom:10px;color:var(--bone-dim)">⚪ Обычные</h3>
+  <h3 style="font-size:18px;margin-bottom:10px;color:var(--bone-dim)">⚪ Обычные (этажи 1-3)</h3>
   <div class="room-list">
     <div class="room"><span class="name">🧟 Больной ходок</span></div>
-    <div class="room"><span class="name">🤒 Кашляющий заражённый</span></div>
-    <div class="room"><span class="name">🧪 Кислотный слизень</span></div>
     <div class="room"><span class="name">🐀 Мутировавшая крыса</span></div>
     <div class="room"><span class="name">🔪 Одичавший мародёр</span></div>
+    <div class="room"><span class="name">🪓 Каратель-разведчик</span></div>
+    <div class="room"><span class="name">🤒 Кашляющий заражённый</span></div>
     <div class="room"><span class="name">🦂 Панцирный жалохвост</span></div>
+    <div class="room"><span class="name">🧪 Кислотный слизень</span></div>
+    <div class="room"><span class="name">🐺 Разоритель Гиен</span></div>
+    <div class="room"><span class="name">🪖 Солдат Мёртвой Роты</span></div>
   </div>
 
-  <h3 style="font-size:18px;margin:22px 0 10px;color:var(--bone-dim)">🔵 Редкие</h3>
+  <h3 style="font-size:18px;margin:22px 0 10px;color:var(--bone-dim)">🔵 Редкие (этажи 4-17)</h3>
   <div class="room-list">
-    <div class="room"><span class="name">🧊 Крио-тварь</span></div>
-    <div class="room"><span class="name">🕷️ Паук-трупоед</span></div>
-    <div class="room"><span class="name">🦎 Ползун</span></div>
-    <div class="room"><span class="name">🐺 Радиационный волк</span></div>
+    <div class="room"><span class="name">🪓 Воин Карателей</span></div>
     <div class="room"><span class="name">🤖 Ржавый страж</span></div>
-    <div class="room"><span class="name">🐗 Секач-мутант</span></div>
+    <div class="room"><span class="name">🦎 Ползун</span></div>
     <div class="room"><span class="name">🦴 Собиратель костей</span></div>
+    <div class="room"><span class="name">🐺 Радиационный волк</span></div>
+    <div class="room"><span class="name">🐗 Секач-мутант</span></div>
     <div class="room"><span class="name">🦍 Техно-горилла</span></div>
+    <div class="room"><span class="name">🕷️ Паук-трупоед</span></div>
+    <div class="room"><span class="name">🧊 Крио-тварь</span></div>
+    <div class="room"><span class="name">🪖 Сержант Мёртвой Роты</span></div>
     <div class="room"><span class="name">🧠 Тронутый скиталец</span></div>
     <div class="room"><span class="name">👹 Химера пустошей</span></div>
+    <div class="room"><span class="name">🐺 Ищейка Гиен</span></div>
     <div class="room"><span class="name">🔥 Чокнутый факир</span></div>
   </div>
 
-  <h3 style="font-size:18px;margin:22px 0 10px;color:var(--bone-dim)">🟣 Эпические</h3>
+  <h3 style="font-size:18px;margin:22px 0 10px;color:var(--bone-dim)">🟣 Эпические (этажи 7-28)</h3>
   <div class="room-list">
-    <div class="room"><span class="name">🐕‍🦺 Вожак стаи мутантов</span></div>
-    <div class="room"><span class="name">🪓 Каратель-палач</span></div>
-    <div class="room"><span class="name">🩸 Кровавый жнец</span></div>
-    <div class="room"><span class="name">💀 Опустошитель Бездны</span></div>
-    <div class="room"><span class="name">🍄 Поражённый плесенью</span></div>
-    <div class="room"><span class="name">🌊 Тварь из коллектора</span></div>
+    <div class="room"><span class="name">🪓 Каратель-уничтожитель</span></div>
     <div class="room"><span class="name">🦾 Экзоскелет-палач</span></div>
     <div class="room"><span class="name">⚡ Электрочервь</span></div>
+    <div class="room"><span class="name">🩸 Кровавый жнец</span></div>
     <div class="room"><span class="name">☣️ Ядовитый кот</span></div>
+    <div class="room"><span class="name">🪖 Лейтенант Мёртвой Роты</span></div>
+    <div class="room"><span class="name">🍄 Поражённый плесенью</span></div>
+    <div class="room"><span class="name">🌊 Тварь из коллектора</span></div>
+    <div class="room"><span class="name">🐺 Ликвидатор Гиен</span></div>
+    <div class="room"><span class="name">🐕‍🦺 Вожак стаи мутантов</span></div>
+    <div class="room"><span class="name">💀 Опустошитель Бездны</span></div>
   </div>
 
-  <div class="warn-box">Боссы этажей — не отдельные существа, а усиленные версии обычных обитателей лабиринта. Странствующий мутант при агрессивных переговорах превращается в отдельного противника — 🧟 Разъярённого мутанта.</div>
+  <h3 style="font-size:18px;margin:22px 0 10px;color:var(--bone-dim)">⚔️ Военизированные фракции</h3>
+  <p style="font-size:14px;color:var(--bone-dim);margin-top:-4px">Три организованные группировки — у каждой три обычных тира (общий/редкий/эпик) плюс собственный уникальный босс где-то на большой глубине.</p>
+  <table class="data">
+    <tr><th>Фракция</th><th>Обычный</th><th>Редкий</th><th>Эпический</th><th>Босс</th></tr>
+    <tr><td>🪓 Каратели</td><td class="num">этаж 2</td><td class="num">этаж 4</td><td class="num">этаж 7</td><td>Главарь Карателей (7), Верховный Каратель (27)</td></tr>
+    <tr><td>🪖 Мёртвая рота</td><td class="num">этаж 3</td><td class="num">этаж 11</td><td class="num">этаж 16</td><td>Командующий Мёртвой Роты (20)</td></tr>
+    <tr><td>🐺 Гиены</td><td class="num">этаж 3</td><td class="num">этаж 14</td><td class="num">этаж 20</td><td>Предводитель Гиен (23)</td></tr>
+  </table>
+  <p style="font-size:13.5px;color:var(--bone-dim)">Гиены — не звериная стая, а прокачанные безжалостные наёмники-сталкеры; название банды, не буквальный вид существа.</p>
+
+  <div class="warn-box">Боссы этажей вне трёх фракций выше — не отдельные существа, а усиленные версии обычных обитателей лабиринта, строятся от самого опасного врага этажа. Странствующий мутант при агрессивных переговорах превращается в отдельного противника — 🧟 Разъярённого мутанта.</div>
+</section>
+
+<div class="hazard"></div>
+
+<!-- ===================== СЕТОВОЕ СНАРЯЖЕНИЕ ===================== -->
+<section id="gear-sets">
+  <div class="sec-label">11 — ТРОФЕИ ОСОБОЙ ЦЕННОСТИ</div>
+  <h2>Сетовые комплекты</h2>
+  <p class="lead">Два новых тира снаряжения сверх обычного/редкого/эпического — только для брони (4 слота: голова/тело/руки/ноги), оружие в сеты не входит. Каждый комплект даёт накопительные бонусы за 2, 3 и 4 надетые части одновременно.</p>
+
+  <div class="card">
+    <h3>Как открываются по этажам</h3>
+    <table class="data">
+      <tr><th>Тир</th><th>Открывается с этажа</th><th>Где выпадает</th></tr>
+      <tr><td>🔴 Мифический</td><td class="num">20</td><td>С любой активности (бой, тайник, мини-игра)</td></tr>
+      <tr><td>🟡 Легендарный</td><td class="num">25</td><td>ТОЛЬКО с боссов этажей 25-30, шанс 15%</td></tr>
+    </table>
+    <p>Легендарный дроп с босса — случайный среди всех 6 наборов сразу, не зависит от твоей специализации. Можно выбить чужой комплект — надеть нельзя, но продать скупщику или выставить на аукцион можно.</p>
+  </div>
+
+  <div class="card">
+    <h3>Как считаются бонусы</h3>
+    <p>Части разных сетов работают <b style="color:var(--bone)">независимо друг от друга</b> — если надето 2 части «Уцелевшего» и 2 части «Мародёра» одновременно, активны бонусы уровня «2» у обоих сразу, не нужно, чтобы все 4 слота были из одного комплекта. Бонусы накопительные: на 4 частях действуют разом все три порога (2+3+4).</p>
+  </div>
+
+  <h3 style="font-size:18px;margin:26px 0 10px;color:var(--bone-dim)">🔴 Мифические — универсальные, доступны любому классу и специализации</h3>
+
+  <div class="card">
+    <h3>Уцелевший <span class="tag">выживание</span></h3>
+    <div class="spec-grid">
+      <div class="spec"><b>2 части</b><span>+5% Уклонение, +5% Шанс блока</span></div>
+      <div class="spec"><b>3 части</b><span>+ 5% ХП</span></div>
+      <div class="spec"><b>4 части</b><span>+ −15% длительности всех дебафов на себе</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Мародёр <span class="tag">атака и добыча</span></h3>
+    <div class="spec-grid">
+      <div class="spec"><b>2 части</b><span>+8% урона</span></div>
+      <div class="spec"><b>3 части</b><span>+ 5% крит-шанс</span></div>
+      <div class="spec"><b>4 части</b><span>+ 15% удача редкого/эпического лута</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Странник <span class="tag">выносливость</span></h3>
+    <div class="spec-grid">
+      <div class="spec"><b>2 части</b><span>+8% меткость</span></div>
+      <div class="spec"><b>3 части</b><span>+ −15% темп накопления усталости</span></div>
+      <div class="spec"><b>4 части</b><span>+ −15% длительности всех дебафов на себе</span></div>
+    </div>
+  </div>
+
+  <h3 style="font-size:18px;margin:26px 0 10px;color:var(--bone-dim)">🟡 Легендарные — по одному на специализацию, строгая привязка</h3>
+  <p style="font-size:14px;color:var(--bone-dim);margin-top:-4px">Надеть может только игрок с ТОЧНО этой специализацией. При смене спека (или класса) несовместимая вещь автоматически снимается обратно в инвентарь.</p>
+
+  <div class="card">
+    <h3>Несокрушимого <span class="tag">Головорез</span></h3>
+    <div class="spec-grid">
+      <div class="spec"><b>2 части</b><span>+5% ХП</span></div>
+      <div class="spec"><b>3 части</b><span>+ 10% Шанс блока</span></div>
+      <div class="spec"><b>4 части</b><span>+ 5% доп. снижение входящего урона (сверх базового спекового)</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Смертника <span class="tag">Головорез</span></h3>
+    <div class="spec-grid">
+      <div class="spec"><b>2 части</b><span>+8% крит-шанс</span></div>
+      <div class="spec"><b>3 части</b><span>+ 10% урона</span></div>
+      <div class="spec"><b>4 части</b><span>+ 10% к потолку бонуса урона от потери ХП</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Отравителя <span class="tag">Бродяга</span></h3>
+    <div class="spec-grid">
+      <div class="spec"><b>2 части</b><span>+8% урона</span></div>
+      <div class="spec"><b>3 части</b><span>+ −20% длительности дебафов на себе</span></div>
+      <div class="spec"><b>4 части</b><span>+ 10% крит-шанс</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Кочевника <span class="tag">Бродяга</span></h3>
+    <div class="spec-grid">
+      <div class="spec"><b>2 части</b><span>−15% темп накопления усталости</span></div>
+      <div class="spec"><b>3 части</b><span>+ 10% меткость</span></div>
+      <div class="spec"><b>4 части</b><span>+ 10% ХП</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Загонщика <span class="tag">Охотник</span></h3>
+    <div class="spec-grid">
+      <div class="spec"><b>2 части</b><span>+10% крит-шанс</span></div>
+      <div class="spec"><b>3 части</b><span>+ 10% урона</span></div>
+      <div class="spec"><b>4 части</b><span>+ 15% удача редкого/эпического лута</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Ищейки <span class="tag">Охотник</span></h3>
+    <div class="spec-grid">
+      <div class="spec"><b>2 части</b><span>+15% удача редкого/эпического лута</span></div>
+      <div class="spec"><b>3 части</b><span>+ 10% Уклонение</span></div>
+      <div class="spec"><b>4 части</b><span>+ 10% меткость</span></div>
+    </div>
+  </div>
+
+  <div class="warn-box">Легендарные наборы заметно сильнее мифических — и по защите каждого отдельного предмета, и по силе бонусов. Каждая часть называется по формуле «[тип брони] + [название сета]» — например, «Поножи Несокрушимого» или «Наручи Отравителя».</div>
 </section>
 
 <footer>
