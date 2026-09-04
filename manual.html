@@ -126,12 +126,12 @@
     border-bottom: 1px solid var(--line);
     display: flex;
     overflow-x: auto;
-    scrollbar-width: thin;
+    scrollbar-width: auto;
     scrollbar-color: var(--rust) transparent;
   }
-  nav::-webkit-scrollbar { height: 5px; }
-  nav::-webkit-scrollbar-track { background: transparent; }
-  nav::-webkit-scrollbar-thumb { background: var(--rust); border-radius: 3px; }
+  nav::-webkit-scrollbar { height: 10px; }
+  nav::-webkit-scrollbar-track { background: var(--panel); }
+  nav::-webkit-scrollbar-thumb { background: var(--rust); border-radius: 5px; border: 1px solid var(--amber); }
   nav a {
     flex: 0 0 auto;
     padding: 13px 16px;
