@@ -126,10 +126,12 @@
     border-bottom: 1px solid var(--line);
     display: flex;
     overflow-x: auto;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
+    scrollbar-width: thin;
+    scrollbar-color: var(--rust) transparent;
   }
-  nav::-webkit-scrollbar { display: none; }
+  nav::-webkit-scrollbar { height: 5px; }
+  nav::-webkit-scrollbar-track { background: transparent; }
+  nav::-webkit-scrollbar-thumb { background: var(--rust); border-radius: 3px; }
   nav a {
     flex: 0 0 auto;
     padding: 13px 16px;
@@ -792,6 +794,18 @@
   ЛАБИРИНТ // ПОЛЕВОЙ ТЕРМИНАЛ ВЫЖИВШЕГО<br>
   Данные актуальны на момент последнего обновления протокола.
 </footer>
+
+<script>
+  // На десктопе обычная мышь прокручивает только вертикально — переводим
+  // прокрутку колёсиком в горизонтальную, пока курсор над навигацией.
+  // На мобильном это не нужно (там уже работает свайп пальцем), поэтому
+  // просто не мешает touch-based скроллу.
+  document.querySelector('nav').addEventListener('wheel', function (e) {
+    if (e.deltaY === 0) return;
+    e.preventDefault();
+    this.scrollLeft += e.deltaY;
+  }, { passive: false });
+</script>
 
 </body>
 </html>
